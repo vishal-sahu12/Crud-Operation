@@ -1,10 +1,17 @@
-import { PrismaClient } from "@prisma/client"
-import express from "express"
+import "dotenv/config"
+import express, { Request, Response } from "express"
+import { PrismaClient } from "./generated/prisma/client"
+import { PrismaPg } from "@prisma/adapter-pg"
+import { Pool } from "pg"
 
 const app = express()
-const prismaClient = new PrismaClient();
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+})
+const adapter = new PrismaPg(pool)
+const prismaClient = new PrismaClient({ adapter })
 
-app.get("/", async (req, res) => {
+app.get("/", async (req: Request, res: Response) => {
    
     const data = await prismaClient.user.findMany();
     res.json({
@@ -12,7 +19,7 @@ app.get("/", async (req, res) => {
     })
 })
 
-app.post("/", async (req, res) => {
+app.post("/", async (req: Request, res: Response) => {
 
     await prismaClient.user.create({
         data: {
