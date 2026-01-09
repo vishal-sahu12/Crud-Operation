@@ -7,6 +7,7 @@ module.exports = defineConfig({
     path: "prisma/migrations",
   },
   datasource: {
-    url: { fromEnvVar: "DATABASE_URL" },
+    // Read connection string from env, e.g. DATABASE_URL=postgresql://user:pass@host:5432/db
+    url: process.env.DATABASE_URL,
   },
 });
