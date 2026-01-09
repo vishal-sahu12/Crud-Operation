@@ -5,6 +5,7 @@ import { PrismaPg } from "@prisma/adapter-pg"
 import { Pool } from "pg"
 
 const app = express()
+app.use(express.json())
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
 })
@@ -32,4 +33,6 @@ app.post("/", async (req: Request, res: Response) => {
     })
 })
 
-app.listen(3000);
+app.listen(3000, "0.0.0.0", () => {
+  console.log("Server running on port 3000");
+});

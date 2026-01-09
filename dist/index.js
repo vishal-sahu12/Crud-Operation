@@ -9,6 +9,7 @@ const client_1 = require("./generated/prisma/client");
 const adapter_pg_1 = require("@prisma/adapter-pg");
 const pg_1 = require("pg");
 const app = (0, express_1.default)();
+app.use(express_1.default.json());
 const pool = new pg_1.Pool({
     connectionString: process.env.DATABASE_URL,
 });
@@ -31,5 +32,7 @@ app.post("/", async (req, res) => {
         "message": "post endpoint"
     });
 });
-app.listen(3000);
+app.listen(3000, "0.0.0.0", () => {
+    console.log("Server running on port 3000");
+});
 //# sourceMappingURL=index.js.map
